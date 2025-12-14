@@ -9,6 +9,13 @@ cask "pipe-optimizer" do
 
   app "Pipe Optimizer.app"
 
+  # Remove quarantine attribute since app is not notarized
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-cr", "#{appdir}/Pipe Optimizer.app"],
+                   sudo: false
+  end
+
   caveats <<~EOS
     Pipe Optimizer finds mathematically optimal ways to combine pipe segments
     into piles of a target length, minimizing waste.
